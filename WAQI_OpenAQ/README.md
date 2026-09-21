@@ -16,34 +16,30 @@ flowchart LR
 * Parameters (Thông số đo): Danh mục các chất ô nhiễm hoặc chỉ số khí tượng chuẩn hóa toàn cầu:Bụi & Khí: PM2.5, PM10 , O3 , NO2 , SO2 , CO. Thời tiết: Nhiệt độ, độ ẩm, áp suất, tốc độ gió.   Mỗi parameter có id, name, units (đã được quy chuẩn đồng nhất)
 * Measurements & Aggregations (Chuỗi đo đạc): Dữ liệu chuỗi thời gian thực tế gắn liền với từng sensors_id.
 #### 1.1.2.Luồng truy vấn dữ liệu chuẩn
-```mermaid
-flowchart TD
-    subgraph S1 ["BƯỚC 1: Tìm Location"]
-        A["GET /v3/locations?coordinates=21.0285,105.8542&radius=10000"]
-    end
-
-    subgraph S2 ["BƯỚC 2: Liệt kê Sensors thuộc Location"]
-        B["GET /v3/locations/{locations_id}/sensors"]
-    end
-
-    subgraph S3 ["BƯỚC 3: Kéo dữ liệu đo (Measurements / Aggregations)"]
-        C["GET /v3/sensors/{sensors_id}/measurements?date_from=2026-09-01&date_to=2026-09-20"]
-    end
-
-    A --> B
-    B -- "(Xác định sensor_id đo PM2.5)" --> C
+```text
+BƯỚC 1: Tìm Location
+GET /v3/locations?coordinates=21.0285,105.8542&radius=10000
+    │
+    ▼
+BƯỚC 2: Liệt kê Sensors thuộc Location
+GET /v3/locations/{locations_id}/sensors
+    │ (Xác định sensor_id đo PM2.5)
+    ▼
+BƯỚC 3: Kéo dữ liệu đo (Measurements/Aggregations)
+GET /v3/sensors/{sensors_id}/measurements?date_from=2026-09-01&date_to=2026-09-20
 ```
 #### 1.1.3. Các điểm cốt lõi của OpenAQ v3
-* Địa điểm & Cảm biến:
-  ** GET /v3/locations: Tìm kiếm trạm đo theo quốc gia, tọa độ bán kính (coordinates, radius), nhà cung cấp (providers_id).
-  ** GET /v3/locations/{id}/latest: Lấy giá trị đo mới nhất của tất cả cảm biến tại trạm đó.
-  ** GET /v3/locations/{id}/sensors: Xem toàn bộ danh sách cảm biến gắn tại trạm.
-* Dữ liệu đo đạc & Thống kê tính toán sẵn:
-  ** GET /v3/sensors/{sensors_id}/measurements: Lấy dữ liệu thô nguyên bản do trạm gửi về.
-  ** GET /v3/sensors/{sensors_id}/hours: Dữ liệu trung bình theo giờ.
-  ** GET /v3/sensors/{sensors_id}/days: Dữ liệu trung bình theo ngày.
-  ** GET /v3/sensors/{sensors_id}/hours/dayofweek: Thống kê phân tích xu hướng ô nhiễm theo các ngày trong tuần (T2 - CN).
-  ** GET /v3/sensors/{sensors_id}/hours/hourofday: Phân tích biến thiên ô nhiễm theo các khung giờ trong ngày (0h - 23h).
+### 📍 Địa điểm & Cảm biến
+* `GET /v3/locations`: Tìm kiếm trạm đo theo quốc gia, tọa độ, nhà cung cấp (`providers_id`).
+* `GET /v3/locations/{id}/latest`: Lấy giá trị đo mới nhất của trạm.
+* `GET /v3/locations/{id}/sensors`: Xem toàn bộ danh sách cảm biến thuộc trạm đo.
+
+### 📊 Dữ liệu đo đạc & Thống kê tính toán sẵn
+* `GET /v3/sensors/{sensors_id}/measurements`: Lấy dữ liệu đo gốc (raw measurements).
+* `GET /v3/sensors/{sensors_id}/hours`: Dữ liệu trung bình theo từng giờ.
+* `GET /v3/sensors/{sensors_id}/days`: Dữ liệu trung bình theo từng ngày.
+* `GET /v3/sensors/{sensors_id}/hours/dayofweek`: Thống kê theo giờ của các ngày trong tuần (T2 - CN).
+* `GET /v3/sensors/{sensors_id}/hours/hourofday`: Phân tích thống kê theo từng khung giờ trong ngày.
 ### 1.2.WAQI/AQICN
 WAQI/AQICN là dự án dữ liệu môi trường xã hội cung cấp chỉ số chất lượng không khí theo thời gian thực cho hơn 30.000 trạm trên toàn cầu.
 * Điểm mạnh của WAQI: Đã chuẩn hóa sẵn giá trị tính toán chỉ số AQI tổng thể và AQI cho từng chất ô nhiễm riêng biệt theo trạm.
