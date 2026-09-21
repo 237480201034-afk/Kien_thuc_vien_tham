@@ -1,7 +1,7 @@
 # Kiến thức cơ bản của viễn thám
 ## 1.Khái niệm viễn thám
 Viễn thám là phương pháp thu thập thông tin về các đối tượng, hiện tượng trên bề mặt và trong khí quyển Trái Đất thông qua các cảm biến đặt trên vệ tinh hoặc máy bay mà không cần tiếp xúc trực tiếp
-Trong bài toán sinh báo cáo ô nhiễm không khí bằng LLM, viễn thám đóng vai trò cung cấp góc nhìn không gian diện rộng về các chất gây ô nhiễm, giúp bổ sung dữ liệu cho các khu vực xa xôi hoặc thiếu vắng các trạm đo mặt đất (WAQI/OpenAQ)
+Trong bài toán sinh báo cáo ô nhiễm không khí bằng LLM (AirReport-LLM) , viễn thám đóng vai trò cung cấp góc nhìn không gian diện rộng về các chất gây ô nhiễm, giúp bổ sung dữ liệu cho các khu vực xa xôi hoặc thiếu vắng các trạm đo mặt đất (WAQI/OpenAQ)
 ## 2.Vệ tinh quan sát Trái Đất (Sentinel-5P) 
 Vệ tinh giám sát chất lượng không khí được trang bị các máy đo quang phổ chuyên dụng nhằm đo lường thành phần khí vi lượng. Dữ liệu từ vệ tinh viễn thám khí quyển được sử dụng để:
 * Theo dõi phân bố mật độ chất ô nhiễm dạng khí (NO2,SO2,CO,O3)
@@ -27,8 +27,8 @@ Trạm quan trắc (WAQI/OpenAQ) + Vệ tinh (Sentinel-5P) + Khí tượng (ERA5
 ## 4.Các nguồn dữ liệu đầu vào
 * Nồng độ các chất ô nhiễm mặt đất: PM2.5, PM10, NO2, SO2, CO, O3.
 * Chỉ số chất lượng không khí AQI theo chuẩn trạm.
-Dữ liệu cột khí quyển từ vệ tinh đo đạc trên diện rộng.
-Yếu tố thời tiết, khí tượng ảnh hưởng trực tiếp đến sự tích tụ hay khuếch tán ô nhiễm.
+* Dữ liệu cột khí quyển từ vệ tinh đo đạc trên diện rộng.
+* Yếu tố thời tiết, khí tượng ảnh hưởng trực tiếp đến sự tích tụ hay khuếch tán ô nhiễm.
 ## 5.Các chất gây ô nhiễm không khí chính
 | Tên chất ô nhiễm | Ký hiệu | Đơn vị đo | Nguồn phát sinh chính | Tác động sức khỏe / Môi trường |
 | :--- | :--- | :--- | :--- | :--- |
@@ -84,4 +84,27 @@ Các trường dữ liệu quan trọng bao gồm:
             tp (tổng lượng mưa)
 
 ## 8. Fine-tuning LLM, LoRA/QLoRA
+* Fine-tuning : Tinh chỉnh, huấn luyện chuyên sâu dựa trên nền tảng có sẵn
+  ** SFT: tinh chỉnh có giám sát
+  ** SSFT: tinh chỉnh tự giám sát
+  ** RLHF: học tăng cường lấy phản hồi của con người
+* LoRA (Low-Rank Adaptation): đóng băng mô hình gốc, tạo ra và huấn luyện vài ma trận trọng số mới gắn thêm vào mô hình gốc và học các điều chỉnh đầu ra của mô hình gốc để phù hợp với nhiệm vụ mới
+* QLoRA (Quantized Low-Rank Adaption): Làm cho mô hình đủ nhỏ gọn trong bộ nhớ , đóng băng mô hình cũ và áp dụng LoRA - tách nhỏ các dữ liệu và nén lại tránh mất hoặc sai dữ liệu
+ 
 ## 9. Prompt Template 
+* Là phương pháp thiết kế câu lệnh được sử dụng trong AirReport-LLM nhằm chuyển đổi các thông số đo đạc thành báo cáo cảnh báo ô nhiễm không khí bằng tiếng Việt.
+* Prompt Template đóng vai trò làm cầu nối kiểm soát chặt chẽ giữa dữ liệu số định lượng (từ WAQI, Sentinel-5P, ERA5) và mô hình ngôn ngữ lớn.
+* Đối với AirReport-LLM, kỹ thuật này là giải pháp cốt lõi để cố định số liệu thực tế, loại trừ triệt để hiện tượng bịa đặt số liệu (hallucination) và định hướng văn phong hành chính/chuyên môn theo mẫu chuẩn của CEM
+
+## 10. Kết luận
+* Dữ liệu quan trắc môi trường và mô hình ngôn ngữ lớn cung cấp khả năng tự động hóa việc phân tích và cảnh báo chất lượng không khí từ dữ liệu số
+* Trong hệ thống AirReport-LLM, dữ liệu quan trắc mặt đất từ WAQI/OpenAQ v3 được sử dụng làm nguồn số liệu chính xác cốt lõi, kết hợp cùng dữ liệu viễn thám Sentinel-5P để bao quát ô nhiễm diện rộng và dữ liệu khí tượng ERA5 nhằm giải thích điều kiện khuếch tán khói bụi
+* Sau khi tổng hợp và chuẩn hóa số liệu, hệ thống đưa dữ liệu qua Prompt Template để mô hình LLM đã tinh chỉnh (Fine-tuned qua LoRA/QLoRA) tự động tạo báo cáo tiếng Việt theo chuẩn văn bản môi trường 
+
+```text
+Cách dữ liệu quan trắc và khí tượng được thu thập, xử lý.
+Ý nghĩa của các trường dữ liệu đo đạc (PM2.5, NO2, AQI, gió, BLH).
+Ý nghĩa của việc kết hợp trạm mặt đất với viễn thám Sentinel-5P.
+Nguyên lý fine-tuning LLM với kỹ thuật LoRA/QLoRA.
+Cách thiết kế Prompt Template để loại trừ ảo giác số liệu.
+Quy trình tự động sinh và xuất báo cáo cảnh báo hoàn chỉnh.
