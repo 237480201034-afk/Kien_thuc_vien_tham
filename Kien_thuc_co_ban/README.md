@@ -25,8 +25,8 @@ Trạm quan trắc (WAQI/OpenAQ) + Vệ tinh (Sentinel-5P) + Khí tượng (ERA5
                    Hệ thống Web & Xuất file PDF
 ```
 ## 4.Các nguồn dữ liệu đầu vào
-Nồng độ các chất ô nhiễm mặt đất: PM2.5, PM10, NO2, SO2, CO, O3.
-Chỉ số chất lượng không khí AQI theo chuẩn trạm.
+* Nồng độ các chất ô nhiễm mặt đất: PM2.5, PM10, NO2, SO2, CO, O3.
+* Chỉ số chất lượng không khí AQI theo chuẩn trạm.
 Dữ liệu cột khí quyển từ vệ tinh đo đạc trên diện rộng.
 Yếu tố thời tiết, khí tượng ảnh hưởng trực tiếp đến sự tích tụ hay khuếch tán ô nhiễm.
 ## 5.Các chất gây ô nhiễm không khí chính
