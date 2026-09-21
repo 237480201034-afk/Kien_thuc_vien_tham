@@ -7,10 +7,7 @@
  ** Hỗ trợ dữ liệu lịch sử dài hạn (truy vấn theo ngày/tháng/năm)
  ** Quản lý phân quyền truy cập thông qua header 'X-API-Key'
 #### 1.1.1.Mô hình dữ liệu quan hệ:
-```mermaid
-flowchart LR
-    A[Locations] --> B[Sensors] --> C[Parameters] --> D[Measurements / Aggregations]
-```
+`Locations` ➔ `Sensors` ➔ `Parameters` ➔ `Measurements / Aggregations`
 * Locations (Trạm quan trắc): Đại diện cho vị trí địa lý cố định hoặc di động (tọa độ coordinates, quốc gia country, độ cao, loại trạm đo của chính phủ hay cảm biến giá rẻ - low-cost sensor). Một Location có thể chứa nhiều Sensor.
 * Sensors (Cảm biến vật lý): Thiết bị đo cụ thể gắn tại một location. Mỗi sensor thường chỉ đo đúng 1 tham số (parameter).
 * Parameters (Thông số đo): Danh mục các chất ô nhiễm hoặc chỉ số khí tượng chuẩn hóa toàn cầu:Bụi & Khí: PM2.5, PM10 , O3 , NO2 , SO2 , CO. Thời tiết: Nhiệt độ, độ ẩm, áp suất, tốc độ gió.   Mỗi parameter có id, name, units (đã được quy chuẩn đồng nhất)
