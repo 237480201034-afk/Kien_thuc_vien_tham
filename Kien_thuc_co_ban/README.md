@@ -9,7 +9,7 @@ Vệ tinh giám sát chất lượng không khí được trang bị các máy �
 * Phát hiện các vệt khói bụi liên tỉnh hoặc ô nhiễm xuyên biên giới
 * Làm nguồn dữ liệu kiểm chứng và bổ trợ không gian cho các trạm quan trắc mặt đất
 ## 3.Nguyên lý hoạt động cơ bản của hệ thống:
-'''
+```
 Trạm quan trắc (WAQI/OpenAQ) + Vệ tinh (Sentinel-5P) + Khí tượng (ERA5)
                                ↓
                    Làm sạch & Tiền xử lý số liệu
@@ -23,6 +23,7 @@ Trạm quan trắc (WAQI/OpenAQ) + Vệ tinh (Sentinel-5P) + Khí tượng (ERA5
                   Báo cáo Tiếng Việt hoàn chỉnh
                                ↓
                    Hệ thống Web & Xuất file PDF
+```
 ## 4.Các nguồn dữ liệu đầu vào
 Nồng độ các chất ô nhiễm mặt đất: PM2.5, PM10, NO2, SO2, CO, O3.
 Chỉ số chất lượng không khí AQI theo chuẩn trạm.
@@ -41,6 +42,7 @@ Yếu tố thời tiết, khí tượng ảnh hưởng trực tiếp đến sự
 WAQI (World Air Quality Index) và OpenAQ v3 là các nền tảng mở chuyên tổng hợp và cung cấp dữ liệu chất lượng không khí từ các trạm quan trắc mặt đất trên toàn cầu. Hệ thống tích hợp dữ liệu nồng độ các chất ô nhiễm và chỉ số AQI từ nhiều nguồn trạm quan trắc chính phủ, tổ chức nghiên cứu và mạng lưới cảm biến. Đối với AirReport-LLM, WAQI/OpenAQ v3 là nguồn dữ liệu quan trọng để lấy các thông tin số liệu đo đạc thực tế tại mặt đất.
 
 Quy trình cơ bản:
+```
 Trạm quan trắc mặt đất (Chính phủ / Cảm biến)
                       ↓
            Đo đạc nồng độ chất ô nhiễm
@@ -50,7 +52,7 @@ Trạm quan trắc mặt đất (Chính phủ / Cảm biến)
          Dữ liệu chuỗi thời gian ô nhiễm
                       ↓
                AirReport-LLM
-
+```
 Các trường dữ liệu có thể bao gồm 
             station_id
             location_name
