@@ -66,3 +66,22 @@ Các trường dữ liệu có thể bao gồm
             unit
             aqi
 
+## 7.Dữ liệu khí tượng EAR5
+ là bộ dữ liệu tái phân tích khí hậu toàn cầu được cung cấp bởi trung tâm Dự báo Thời tiết Hạn vừa Châu Âu (ECMWF) thông qua Copernicus Climate Data Store (CDS).
+ ERA5 kết hợp mô hình vật lý khí quyển với dữ liệu quan trắc toàn cầu để tái hiện các điều kiện khí tượng chi tiết theo từng giờ.
+ Đối với AirReport-LLM, ERA5 là nguồn dữ liệu quan trọng để lấy các thông tin khí tượng (đặc biệt là gió, nhiệt độ, chiều cao lớp biên khí quyển) phục vụ giải thích cơ chế khuếch tán hoặc tích tụ ô nhiễm trong báo cáo.
+Các trường dữ liệu quan trọng bao gồm:
+
+            latitude
+            longitude
+            time
+            u10 (thành phần gió đông - tây ở 10m)
+            v10 (thành phần gió bắc - nam ở 10m)
+            t2m (nhiệt độ không khí ở 2m)
+            d2m (nhiệt độ điểm sương ở 2m)
+            sp (áp suất bề mặt)
+            blh (chiều cao lớp biên khí quyển - Boundary Layer Height)
+            tp (tổng lượng mưa)
+
+## 8. Fine-tuning LLM, LoRA/QLoRA
+## 9. Prompt Template 
