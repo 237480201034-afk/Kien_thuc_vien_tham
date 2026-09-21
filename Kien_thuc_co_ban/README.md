@@ -36,7 +36,7 @@ Yếu tố thời tiết, khí tượng ảnh hưởng trực tiếp đến sự
 | **Lưu huỳnh Dioxit** | SO₂ | ppb / µg/m³ | Đốt than đá, dầu mỏ, sản xuất công nghiệp | Co thắt phế quản, khó thở, gây mưa axit |
 | **Khí Ozone mặt đất** | O₃ | ppb / µg/m³ | Phản ứng quang hóa giữa NOx và VOC dưới ánh nắng | Gây khó thở, tổn thương mô phổi, suy giảm thị lực |
 | **Khí Carbon Monoxide** | CO | ppm / mg/m³ | Quá trình cháy không hoàn toàn của nhiên liệu | Giảm khả năng vận chuyển oxy của máu, đau đầu, chóng mặt |
-##6.WAQI/OpenAQ
+## 6.WAQI/OpenAQ
 WAQI (World Air Quality Index) và OpenAQ v3 là các nền tảng mở chuyên tổng hợp và cung cấp dữ liệu chất lượng không khí từ các trạm quan trắc mặt đất trên toàn cầu. Hệ thống tích hợp dữ liệu nồng độ các chất ô nhiễm và chỉ số AQI từ nhiều nguồn trạm quan trắc chính phủ, tổ chức nghiên cứu và mạng lưới cảm biến. Đối với AirReport-LLM, WAQI/OpenAQ v3 là nguồn dữ liệu quan trọng để lấy các thông tin số liệu đo đạc thực tế tại mặt đất.
 
 Quy trình cơ bản:
