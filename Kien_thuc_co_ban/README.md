@@ -9,6 +9,7 @@ Vệ tinh giám sát chất lượng không khí được trang bị các máy �
 * Phát hiện các vệt khói bụi liên tỉnh hoặc ô nhiễm xuyên biên giới
 * Làm nguồn dữ liệu kiểm chứng và bổ trợ không gian cho các trạm quan trắc mặt đất
 ## 3.Nguyên lý hoạt động cơ bản của hệ thống:
+'''
 Trạm quan trắc (WAQI/OpenAQ) + Vệ tinh (Sentinel-5P) + Khí tượng (ERA5)
                                ↓
                    Làm sạch & Tiền xử lý số liệu
