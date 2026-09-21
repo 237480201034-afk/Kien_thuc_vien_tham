@@ -1,4 +1,4 @@
-# 5. EAR5
+# 7. EAR5
 ERA5 là bộ dữ liệu tái phân tích khí quyển toàn cầu do Trung tâm Dự báo Thời tiết Hạn vừa Châu Âu (ECMWF) phát triển, được sử dụng trong hệ thống **AirReport-LLM** nhằm bổ sung thông tin thời tiết phục vụ việc giải thích cơ chế tích tụ hoặc khuếch tán ô nhiễm.
 ## 1. ERA5 và dữ liệu khí tượng tái phân tích
 
