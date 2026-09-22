@@ -95,12 +95,38 @@ Các trường dữ liệu quan trọng bao gồm:
 * Là phương pháp thiết kế câu lệnh được sử dụng trong AirReport-LLM nhằm chuyển đổi các thông số đo đạc thành báo cáo cảnh báo ô nhiễm không khí bằng tiếng Việt.
 * Prompt Template đóng vai trò làm cầu nối kiểm soát chặt chẽ giữa dữ liệu số định lượng (từ WAQI, Sentinel-5P, ERA5) và mô hình ngôn ngữ lớn.
 * Đối với AirReport-LLM, kỹ thuật này là giải pháp cốt lõi để cố định số liệu thực tế, loại trừ triệt để hiện tượng bịa đặt số liệu (hallucination) và định hướng văn phong hành chính/chuyên môn theo mẫu chuẩn của CEM
-
-## 10. Kết luận
+## 10. Học máy và học sâu
+### 10.1. Vị trí của Học máy và học sâu
+Fine-tuning LLM thực chất là một nhánh chuyên sâu của **Học sâu (Deep Learning)** thuộc lĩnh vực Xử lý ngôn ngữ tự nhiên (NLP).
+```text
+       Dữ liệu thô (Trạm đo, Vệ tinh, Khí tượng)
+                          ↓
+      [HỌC MÁY TRUYỀN THỐNG / STATISTICAL ML]
+      ├── Tiền xử lý, lọc nhiễu, điền dữ liệu khuyết (KNN Imputer / MICE)
+      ├── Phân cụm mức độ ô nhiễm, phân loại cảnh báo (Random Forest / LightGBM)
+      └── Trích xuất đặc trưng thống kê & Xu hướng nồng độ
+                          ↓
+            Bảng đặc trưng định lượng (Features)
+                          ↓
+             [HỌC SÂU / DEEP LEARNING & LLM]
+      ├── Kiến trúc Transformer (Cơ chế Self-Attention đa đầu)
+      ├── Tinh chỉnh mạng nơ-ron sâu qua Backpropagation (Lan truyền ngược)
+      └── Fine-tuning thích ứng ma trận hạng thấp (LoRA/QLoRA)
+                          ↓
+      Văn bản Báo cáo Cảnh báo Môi trường hoàn chỉnh
+```
+### 10.2. Học máy (ML)
+* Khôi phục chuỗi thời gian bị khuyết: Do trạm quan trắc mặt đất thường mất tín hiệu đột ngột, các giải thuật như KNN hoặc Random Forest Regressor được dùng để nội suy nồng độ PM2.5/NO2 dựa trên trạm lân cận và hướng gió ERA5.
+* Phân lớp rủi ro tự động: Sử dụng các thuật toán phân loại (Decision Tree, SVM, XGBoost) để xác thực ngưỡng chỉ số AQI và phân loại cấp độ cảnh báo (An toàn, Nguy hại, Khẩn cấp) theo đúng quy chuẩn CEM.
+* Đặc điểm: Tối ưu hóa trên dữ liệu dạng bảng, tốc độ tính toán mili-giây, độ chính xác số học tuyệt đối và giải thích được nguyên nhân theo ngưỡng logic cố định.
+### 10.3. Học sâu (DL)
+* Kiến trúc Transformer: Mô hình hoạt động dựa trên hàng chục lớp nơ-ron sâu với cơ chế tự chú ý (Self-Attention), giúp mô hình hiểu được mối liên hệ phức tạp giữa biến động thời tiết (gió lặng, lớp biên thấp) và hiện tượng nồng độ bụi gia tăng.
+* Cơ chế tối ưu hóa lan truyền ngược (Backpropagation): Trong quá trình SFT (Supervised Fine-Tuning), mô hình tính toán đạo hàm hàm mất mát (Cross-Entropy Loss) để điều chỉnh các ma trận trọng số thích ứng.
+* Học biểu diễn ngữ cảnh chuyên ngành: Học sâu giúp mô hình chuyển đổi các vectơ đặc trưng số (Embedding) thành câu văn nhận định tiếng Việt có ngữ pháp chuẩn xác, văn phong hành chính chỉn chu và giàu tính khoa học
+## 11. Kết luận
 * Dữ liệu quan trắc môi trường và mô hình ngôn ngữ lớn cung cấp khả năng tự động hóa việc phân tích và cảnh báo chất lượng không khí từ dữ liệu số
 * Trong hệ thống AirReport-LLM, dữ liệu quan trắc mặt đất từ WAQI/OpenAQ v3 được sử dụng làm nguồn số liệu chính xác cốt lõi, kết hợp cùng dữ liệu viễn thám Sentinel-5P để bao quát ô nhiễm diện rộng và dữ liệu khí tượng ERA5 nhằm giải thích điều kiện khuếch tán khói bụi
 * Sau khi tổng hợp và chuẩn hóa số liệu, hệ thống đưa dữ liệu qua Prompt Template để mô hình LLM đã tinh chỉnh (Fine-tuned qua LoRA/QLoRA) tự động tạo báo cáo tiếng Việt theo chuẩn văn bản môi trường 
-
 ```text
 Cách dữ liệu quan trắc và khí tượng được thu thập, xử lý.
 Ý nghĩa của các trường dữ liệu đo đạc (PM2.5, NO2, AQI, gió, BLH).
